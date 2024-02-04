@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(option =>
 {
     option
-    .UseSqlServer("Server=tcp:oenikta.database.windows.net,1433;Initial Catalog=ToiletAppDb;Persist Security Info=False;User ID=kuglics.barnabas;Password=Almafa123;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;")
+    .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=ToiletApp;Trusted_Connection=True;MultipleActiveResultSets=true")
     .UseLazyLoadingProxies();
 });
 builder.Services.AddTransient<IToiletAppLogic, ToiletAppLogic>();
