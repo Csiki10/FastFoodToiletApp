@@ -1,0 +1,19 @@
+<h1 class="d-flex justify-content-center">Are you sure you want to delete your account?</h1>
+
+<div class="d-flex justify-content-center title-m">
+    <button mat-raised-button
+     routerLink="/home"
+     class="btn-no">
+        No
+    </button>
+    
+    <button 
+    mat-raised-button 
+    color="accent" 
+    (click)="DeleteMyself()"
+    routerLink="/logout"
+    class="btn-yes">
+        Yes
+    </button>
+</div>
+

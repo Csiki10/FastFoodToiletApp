@@ -1,0 +1,14 @@
+{
+  "engines": {
+    "node": ">= 18 <19"
+  },
+  "scripts": {
+      "init": "cd ToiletApp/angular/toilet-app-client && npm install && npm run build",
+      "deploy": "cd ToiletApp/angular/toilet-app-client && npm run start",
+      "ng": "ng",
+      "start": "ng serve",
+      "build": "ng build",
+      "watch": "ng build --watch --configuration development",
+      "test": "ng test"
+    }
+}

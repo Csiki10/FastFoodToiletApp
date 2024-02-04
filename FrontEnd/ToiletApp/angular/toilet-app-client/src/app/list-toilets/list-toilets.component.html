@@ -1,0 +1,376 @@
+<div class="bg-white">
+    <div>
+      <div class="relative z-40 lg:hidden" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-black bg-opacity-25" id="tab-background"></div>
+        <div class="fixed inset-0 z-40 flex" id="filterTabDiv">
+          <div class="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl" id="filter-tab">
+            <div class="flex items-center justify-between px-4">
+              <h2 class="text-lg font-medium text-gray-900">Filters</h2>
+              <button type="button" class="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400">
+                <span class="sr-only">Close menu</span>
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" (click)="closeFilterTab()">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+  
+            <!-- MOBILE Filters -->
+            <form class="mt-4 border-t border-gray-200">
+              <div class="border-t border-gray-200 px-4 py-1">
+                <h3 class="-mx-2 -my-3 flow-root">
+                  <!-- Expand/collapse section button -->
+                  <button type="button" class="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500" 
+                  aria-controls="filter-section-mobile-0" 
+                  aria-expanded="false"
+                  (click)="changeIconMobile('institution')">
+                    <span class="font-medium text-gray-900">Institution</span>
+                    <span class="ml-6 flex items-center">
+                      <!-- Expand icon, show/hide based on section open state. -->
+                      <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" 
+                      id="mobil-plus-institution">
+                        <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                      </svg>
+                      <!-- Collapse icon, show/hide based on section open state. -->
+                      <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" 
+                      id="mobil-minus-institution">
+                        <path fill-rule="evenodd" d="M4 10a.75.75 0 01.75-.75h10.5a.75.75 0 010 1.5H4.75A.75.75 0 014 10z" clip-rule="evenodd" />
+                      </svg>
+                    </span>
+                  </button>
+                </h3>
+                <div class="pt-6" id="institution-filter-mobile">
+                  <div class="space-y-6">
+                    <div class="flex items-center">
+                      <input id="filter-mobile-institution-0" (change)="InstitutionFilterMobile()" name="institution[]" value="McDonalds" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      <label for="filter-mobile-institution-0" class="ml-3 min-w-0 flex-1 text-gray-500">McDonald's</label>
+                    </div>
+                    <div class="flex items-center">
+                      <input id="filter-mobile-institution-1" (change)="InstitutionFilterMobile()" name="institution[]" value="BurgerKing" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      <label for="filter-mobile-institution-1" class="ml-3 min-w-0 flex-1 text-gray-500">Burger King</label>
+                    </div>
+                    <div class="flex items-center">
+                      <input id="filter-mobile-institution-2" (change)="InstitutionFilterMobile()" name="institution[]" value="CostaCaffe" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      <label for="filter-mobile-institution-2" class="ml-3 min-w-0 flex-1 text-gray-500">Costa Caffe</label>
+                    </div>
+                    <div class="flex items-center">
+                      <input id="filter-mobile-institution-3" (change)="InstitutionFilterMobile()" name="institution[]" value="StarBucks" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      <label for="filter-mobile-institution-3" class="ml-3 min-w-0 flex-1 text-gray-500">StarBucks</label>
+                    </div>
+                    <div class="flex items-center">
+                      <input id="filter-mobile-institution-4" (change)="InstitutionFilterMobile()" name="institution[]" value="FreiCaffee" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      <label for="filter-mobile-institution-4" class="ml-3 min-w-0 flex-1 text-gray-500">FreiCaffee</label>
+                    </div>
+                    <div class="flex items-center">
+                      <input id="filter-mobile-institution-5" (change)="InstitutionFilterMobile()" name="institution[]" value="KFC" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      <label for="filter-mobile-institution-5" class="ml-3 min-w-0 flex-1 text-gray-500">KFC</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input id="filter-mobile-institution-6" (change)="InstitutionFilterMobile()" name="institution[]" value="PizzaHut" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                        <label for="filter-mobile-institution-6" class="ml-3 min-w-0 flex-1 text-gray-500">PizzaHut</label>
+                      </div>
+                    <div class="flex items-center">
+                    <input id="filter-mobile-institution-7" (change)="InstitutionFilterMobile()" name="institution[]" value="Other" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="filter-mobile-institution-7" class="ml-3 min-w-0 flex-1 text-gray-500">Other</label>
+                    </div>
+                  </div>
+                </div>
+                <h3 class="-mx-2 -my-3 flow-root">
+                  <!-- Expand/collapse section button -->
+                  <button type="button" 
+                  class="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500" 
+                  aria-controls="filter-section-mobile-0" 
+                  aria-expanded="false"
+                  (click)="changeIconMobile('rating')">
+                    <span class="font-medium text-gray-900">Rating</span>
+                    <span class="ml-6 flex items-center">
+                      <!-- Expand icon, show/hide based on section open state. -->
+                      <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" 
+                      id="mobil-plus-rating"
+                      >
+                        <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                      </svg>
+                      <!-- Collapse icon, show/hide based on section open state. -->
+                      <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" 
+                      id="mobil-minus-rating"
+                      >
+                        <path fill-rule="evenodd" d="M4 10a.75.75 0 01.75-.75h10.5a.75.75 0 010 1.5H4.75A.75.75 0 014 10z" clip-rule="evenodd" />
+                      </svg>
+                    </span>
+                  </button>
+                </h3>
+                <!-- Filter section, show/hide based on section state. -->
+                <div class="pt-6" id="rating-filter-mobile">
+                  <div class="space-y-6">
+                    <div class="flex items-center">
+                      <input id="filter-institution-0" name="institution[]" (change)="RatingFilterMobile()" value="5" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      <span *ngFor="let item of [].constructor(5); let i = index" class="ms-3 mt-1">
+                        <mat-icon class="icon-color" color="accent">star</mat-icon>
+                      </span>
+                      <span *ngFor="let item of [].constructor(0); let i = index" class="ms-3 mt-1">
+                        <mat-icon class="icon-color" color="accent">star_border</mat-icon>
+                      </span>
+                    </div>
+                    <div class="flex items-center">
+                      <input id="filter-institution-0" name="institution[]" (change)="RatingFilterMobile()" value="4" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      <span *ngFor="let item of [].constructor(4); let i = index" class="ms-3 mt-1">
+                        <mat-icon class="icon-color" color="accent">star</mat-icon>
+                      </span>
+                      <span *ngFor="let item of [].constructor(1); let i = index" class="ms-3 mt-1">
+                        <mat-icon class="icon-color" color="accent">star_border</mat-icon>
+                      </span>
+                    </div>
+                    <div class="flex items-center">
+                      <input id="filter-institution-0" name="institution[]" (change)="RatingFilterMobile()" value="3" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      <span *ngFor="let item of [].constructor(3); let i = index" class="ms-3 mt-1">
+                        <mat-icon class="icon-color" color="accent">star</mat-icon>
+                      </span>
+                      <span *ngFor="let item of [].constructor(2); let i = index" class="ms-3 mt-1">
+                        <mat-icon class="icon-color" color="accent">star_border</mat-icon>
+                      </span>
+                    </div>
+                    <div class="flex items-center">
+                      <input id="filter-institution-0" name="institution[]" (change)="RatingFilterMobile()" value="2" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      <span *ngFor="let item of [].constructor(2); let i = index" class="ms-3 mt-1">
+                        <mat-icon class="icon-color" color="accent">star</mat-icon>
+                      </span>
+                      <span *ngFor="let item of [].constructor(3); let i = index" class="ms-3 mt-1">
+                        <mat-icon class="icon-color" color="accent">star_border</mat-icon>
+                      </span>
+                    </div>
+                    <div class="flex items-center">
+                      <input id="filter-institution-0" name="institution[]" (change)="RatingFilterMobile()" value="1" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      <span *ngFor="let item of [].constructor(1); let i = index" class="ms-3 mt-1">
+                        <mat-icon class="icon-color" color="accent">star</mat-icon>
+                      </span>
+                      <span *ngFor="let item of [].constructor(4); let i = index" class="ms-3 mt-1">
+                        <mat-icon class="icon-color" color="accent">star_border</mat-icon>
+                      </span>
+                    </div>
+                    
+                  </div>
+                </div>
+                
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+  
+      <main class="mx-auto max-w-8xl sm:px-6 lg:px-8">
+        <div class="flex items-baseline justify-between border-b border-gray-200 pb-6">
+          <h1 class="text-4xl font-bold tracking-tight text-gray-900">Toilet codes</h1>
+          <div class="flex items-center">
+            <div class="relative inline-block text-left">  
+            </div>
+            <button type="button" (click)="openFilterTab()" class="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden">
+              <span class="sr-only">Filters</span>
+              <svg class="h-5 w-5" aria-hidden="true" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M2.628 1.601C5.028 1.206 7.49 1 10 1s4.973.206 7.372.601a.75.75 0 01.628.74v2.288a2.25 2.25 0 01-.659 1.59l-4.682 4.683a2.25 2.25 0 00-.659 1.59v3.037c0 .684-.31 1.33-.844 1.757l-1.937 1.55A.75.75 0 018 18.25v-5.757a2.25 2.25 0 00-.659-1.591L2.659 6.22A2.25 2.25 0 012 4.629V2.34a.75.75 0 01.628-.74z" clip-rule="evenodd" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <!-- DESKTOP Filters -->
+        <section aria-labelledby="products-heading" class="pb-24 pt-6">  
+          <div class="grid gap-x-8 gap-y-10 lg:grid-cols-6">
+            <div class="hidden lg:block">
+               <!-- Institution -->
+              <div class="border-b border-gray-200 py-1">
+                <h3 class="-my-3 flow-root">
+                  <!-- Expand/collapse section button -->
+                  <button type="button" 
+                  class="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500" 
+                  aria-controls="filter-section-0" 
+                  aria-expanded="false"
+                  (click)="changeIcon('institution','filter')">
+                    <span class="font-medium text-gray-900">Institution</span>
+                    <span class="ml-6 flex items-center">
+                      <!-- Expand icon, show/hide based on section open state. -->
+                      <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" id="filter-plus-institution"
+                      >
+                        <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                      </svg>
+                      <!-- Collapse icon, show/hide based on section open state. -->
+                      <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" id="filter-minus-institution" 
+                      >
+                        <path fill-rule="evenodd" d="M4 10a.75.75 0 01.75-.75h10.5a.75.75 0 010 1.5H4.75A.75.75 0 014 10z" clip-rule="evenodd" />
+                      </svg>
+                    </span>
+                  </button>
+                </h3>
+                <!-- Institution -->
+                <div class="pt-6" id="filter-filter-institution">
+                  <div class="space-y-4">
+                    <div class="flex items-center">
+                      <input id="filter-institution-0" name="institution[]" (change)="InstitutionFilter()" value="McDonalds" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      <label for="filter-institution-0" class="ml-3 text-sm text-gray-600">McDonald's</label>
+                    </div>
+                    <div class="flex items-center">
+                      <input id="filter-institution-1" name="institution[]" (change)="InstitutionFilter()" value="BurgerKing" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      <label for="filter-institution-1" class="ml-3 text-sm text-gray-600">BurgerKing</label>
+                    </div>
+                    <div class="flex items-center">
+                      <input id="filter-institution-2" name="institution[]" (change)="InstitutionFilter()" value="CostaCaffe" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      <label for="filter-institution-2" class="ml-3 text-sm text-gray-600">Costa Caffe</label>
+                    </div>
+                    <div class="flex items-center">
+                      <input id="filter-institution-3" name="institution[]" (change)="InstitutionFilter()" value="StarBucks" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      <label for="filter-institution-3" class="ml-3 text-sm text-gray-600">StarBucks</label>
+                    </div>
+                    <div class="flex items-center">
+                      <input id="filter-institution-4" name="institution[]" (change)="InstitutionFilter()" value="FreiCaffee" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      <label for="filter-institution-4" class="ml-3 text-sm text-gray-600">FreiCaffee</label>
+                    </div>
+                    <div class="flex items-center">
+                      <input id="filter-institution-5" name="institution[]" (change)="InstitutionFilter()" value="KFC" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      <label for="filter-institution-5" class="ml-3 text-sm text-gray-600">KFC</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input id="filter-institution-6" name="institution[]" (change)="InstitutionFilter()" value="PizzaHut" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                        <label for="filter-institution-6" class="ml-3 text-sm text-gray-600">PizzaHut</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input id="filter-institution-7" name="institution[]" (change)="InstitutionFilter()" value="Other" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                        <label for="filter-institution-7" class="ml-3 text-sm text-gray-600">Other</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+               <!-- Rating -->
+              <div class="border-b border-gray-200 py-1">
+                <h3 class="-my-3 flow-root">
+                  <!-- Expand/collapse section button -->
+                  <button type="button" class="flex w-full items-center justify-between bg-white py-3 text-sm 
+                  text-gray-400 hover:text-gray-500" 
+                  aria-controls="filter-section-0" 
+                  aria-expanded="false"
+                  (click)="changeIcon('rating','filter')">
+                    <span class="font-medium text-gray-900">Rating</span>
+                    <span class="ml-6 flex items-center">
+                      <!-- Expand icon, show/hide based on section open state. -->
+                      <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" id="filter-plus-rating" 
+                      >
+                        <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                      </svg>
+                      <!-- Collapse icon, show/hide based on section open state. -->
+                      <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" id="filter-minus-rating" 
+                      >
+                        <path fill-rule="evenodd" d="M4 10a.75.75 0 01.75-.75h10.5a.75.75 0 010 1.5H4.75A.75.75 0 014 10z" clip-rule="evenodd" />
+                      </svg>
+                    </span>
+                  </button>
+                </h3>
+                <!-- rating LIST -->
+                <div class="pt-6" id="filter-filter-rating">
+                  <div class="space-y-4">
+                    <div class="flex items-center">
+                      <input id="filter-institution-0" name="institution[]" (change)="RatingFilter()" value="5" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      <span *ngFor="let item of [].constructor(5); let i = index" class="ms-3 mt-1">
+                        <mat-icon class="icon-color" color="accent">star</mat-icon>
+                      </span>
+                    </div>
+                    <div class="flex items-center">
+                      <input id="filter-institution-0" name="institution[]" (change)="RatingFilter()" value="4" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      <span *ngFor="let item of [].constructor(4); let i = index" class="ms-3 mt-1">
+                        <mat-icon class="icon-color" color="accent">star</mat-icon>
+                      </span>
+                      <span *ngFor="let item of [].constructor(1); let i = index" class="ms-3 mt-1">
+                        <mat-icon class="icon-color" color="accent">star_border</mat-icon>
+                      </span>
+                    </div>
+                    <div class="flex items-center">
+                      <input id="filter-institution-0" name="institution[]" (change)="RatingFilter()" value="3" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      <span *ngFor="let item of [].constructor(3); let i = index" class="ms-3 mt-1">
+                        <mat-icon class="icon-color" color="accent">star</mat-icon>
+                      </span>
+                      <span *ngFor="let item of [].constructor(2); let i = index" class="ms-3 mt-1">
+                        <mat-icon class="icon-color" color="accent">star_border</mat-icon>
+                      </span>
+                    </div>
+                    <div class="flex items-center">
+                      <input id="filter-institution-0" name="institution[]" (change)="RatingFilter()" value="2" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      <span *ngFor="let item of [].constructor(2); let i = index" class="ms-3 mt-1">
+                        <mat-icon class="icon-color" color="accent">star</mat-icon>
+                      </span>
+                      <span *ngFor="let item of [].constructor(3); let i = index" class="ms-3 mt-1">
+                        <mat-icon class="icon-color" color="accent">star_border</mat-icon>
+                      </span>
+                    </div>
+                    <div class="flex items-center">
+                      <input id="filter-institution-0" name="institution[]" (change)="InstitutionFilter()" value="1" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      <span *ngFor="let item of [].constructor(1); let i = index" class="ms-3 mt-1">
+                        <mat-icon class="icon-color" color="accent">star</mat-icon>
+                      </span>
+                      <span *ngFor="let item of [].constructor(4); let i = index" class="ms-3 mt-1">
+                        <mat-icon class="icon-color" color="accent">star_border</mat-icon>
+                      </span>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Product grid -->
+            <div class="lg:col-span-5">
+                <div class="d-flex row justify-content-center m-0">
+                    <mat-card class="mx-3 align-items-center"  *ngFor="let toilet of toilets"> 
+                        <mat-card-content class="d-flex justify-content-start mb-2">   
+                            <img mat-card-avatar  [src]="toilet.userImage" class="profile-img m-0">
+                            <mat-card-subtitle class="ms-2 d-flex align-items-center">{{ toilet.userName }}</mat-card-subtitle> 
+                                     
+                        </mat-card-content>     
+                        <div class="image-container">
+                            <img mat-card-sm-image [src]="toilet.imageUrl" class="pics">
+                        </div>      
+                        <mat-divider></mat-divider>
+                        <mat-card-content class="d-block justify-content-center text-center ">
+                                <mat-card-title>{{ toilet.code }}</mat-card-title>
+                                <mat-card-subtitle>{{ toilet.institutionString }}</mat-card-subtitle>
+                                <span *ngFor="let item of [].constructor(toilet.avgStar); let i = index">
+                                    <mat-icon class="icon-color" color="accent">star</mat-icon>
+                                </span>
+                                <span *ngFor="let item of [].constructor(5 - toilet.avgStar); let i = index">
+                                    <mat-icon class="icon-color" color="accent">star_border</mat-icon>
+                                </span>
+                        </mat-card-content>
+                        <mat-divider></mat-divider>
+                        <mat-card-content>
+                            <button
+                                mat-raised-button
+                                color="primary"
+                                [routerLink]="['/create-opinion/', toilet.id]" >
+                                <mat-icon aria-hidden="false" aria-label="Add icon" fontIcon="add_circle"></mat-icon>
+                                New opinion
+                            </button>
+                            <button mat-raised-button [routerLink]="['/list-opinions/', toilet.id]">
+                                <mat-icon>list</mat-icon>
+                                View opinions
+                            </button>
+                            
+                            <button 
+                                mat-raised-button
+                                *ngIf="amICreated(toilet.userId)"
+                                [routerLink]="['/update-toilet/', toilet.id]">
+                                <mat-icon aria-hidden="false" aria-label="Edit icon" fontIcon="edit"></mat-icon>
+                                Edit
+                            </button>
+                            
+                            <button 
+                                (click)="deleteToilet(toilet.id)"
+                                *ngIf="amICreated(toilet.userId)"
+                                mat-raised-button
+                                color="accent">
+                                <mat-icon aria-hidden="false" aria-label="Edit icon" fontIcon="delete_outline"></mat-icon>
+                                Delete
+                            </button>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  
+<div id="clear"></div>

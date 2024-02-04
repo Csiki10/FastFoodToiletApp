@@ -1,0 +1,59 @@
+<div class="info mb-4 ">
+    <mat-card class=" info-card d-flex justify-content-center">
+        <h1 class="text-center">Opinions statistic</h1>
+        <hr>
+        <div class="d-flex justify-content-center align-items-center p-3 ms-3">
+            <mat-label>Opinion count: </mat-label>
+            <mat-chip-option 
+                color="accent" 
+                selected=""
+                class="ms-2">
+                {{getOpinionCount()}}             
+            </mat-chip-option>
+        </div>
+    </mat-card>
+</div>
+<div class="container-fluid d-flex row justify-content-center m-0">
+    
+    <mat-card class="mx-3 align-items-center card"  *ngFor="let opinion of opinions">      
+        <mat-divider></mat-divider>
+        <mat-card-header class="d-flex justify-content-center text-center">
+            <mat-card-title>
+                <span *ngFor="let item of [].constructor(opinion.stars); let i = index">
+                    <mat-icon class="icon-color" color="accent">star</mat-icon>
+                </span>
+                <span *ngFor="let item of [].constructor(5 - opinion.stars); let i = index">
+                    <mat-icon class="icon-color" color="accent">star_border</mat-icon>
+                </span>
+            </mat-card-title>
+            <mat-card-subtitle>{{ opinion.dateString }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+
+        <mat-card-content>
+            <h3>Description</h3>
+            <p>
+                {{ opinion.description }}
+            </p>
+
+            <button 
+            mat-raised-button
+            *ngIf="amICreated(opinion.userUid)"
+            [routerLink]="['/update-opinion/', opinion.uid]">
+            <mat-icon>edit</mat-icon>
+                Update opinion
+            </button>
+    
+            <button
+            (click)="deleteOpinion(opinion.toiletUid, opinion.uid)"
+            *ngIf="amICreated(opinion.userUid)"
+            mat-raised-button
+            color="accent">
+            <mat-icon>delete_outline</mat-icon>
+                Delete opinion
+            </button>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<div id="clear"></div>

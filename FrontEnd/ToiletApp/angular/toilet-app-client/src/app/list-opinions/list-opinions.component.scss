@@ -1,0 +1,53 @@
+.info {
+    max-width: 630px;
+    margin: auto;
+}
+
+.number {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    padding: 2px 4px;
+    border-radius: 50%;
+  }
+
+hr {
+    margin: auto;
+    width: 50%;
+    align-items: center;
+}
+
+.card{
+    width: 300px;
+    margin-bottom: 3rem;
+
+    button {
+        width:100%;
+        display:block;
+        margin-bottom: 1rem;
+    }
+
+    h1 {
+        margin-bottom: 50px;
+    }
+
+    mat-divider {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        width: 80%;
+        align-items: center;
+
+    }
+
+    mat-card-content {
+        width: 100%;
+    }
+
+    h3 {
+        display: flex;
+        justify-content: center;
+    }
+}

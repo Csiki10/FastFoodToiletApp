@@ -1,0 +1,46 @@
+<h1>Update user</h1>
+
+<mat-form-field appearance="outline">
+    <mat-label>User name</mat-label>
+    <input matInput
+        [(ngModel)]="this.user.userName"
+        [formControl]="this.userName">
+    <mat-icon matSuffix>text_fields</mat-icon>
+    <mat-hint>Your user name</mat-hint>
+    <mat-error *ngIf="this.userName.invalid">{{(getNameErrorMessage())}}</mat-error>
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+    <mat-label>First name</mat-label>
+    <input matInput
+        [(ngModel)]="this.user.firstName"
+        [formControl]="this.firstName">
+    <mat-icon matSuffix>text_fields</mat-icon>
+    <mat-hint>Your first name</mat-hint>
+    <mat-error *ngIf="this.firstName.invalid">{{(getFirstNameErrorMessage())}}</mat-error>
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+    <mat-label>Last name</mat-label>
+    <input matInput
+        [(ngModel)]="this.user.lastName"
+        [formControl]="this.lastName">
+    <mat-icon matSuffix>text_fields</mat-icon>
+    <mat-hint>Your last name</mat-hint>
+    <mat-error *ngIf="this.lastName.invalid">{{(getLastNameErrorMessage())}}</mat-error>
+</mat-form-field>
+
+<mat-checkbox
+    [(ngModel)]="this.acceptTermsAndConditions"
+>
+    After the update you will have to sign in again!
+</mat-checkbox>
+
+<button
+    mat-flat-button
+    color="accent"
+    (click)="updateUser()"
+    [disabled]="!acceptTermsAndConditions || formInvalid"
+>    
+    Update user
+</button>

@@ -1,0 +1,48 @@
+<div class="flex items-baseline justify-between border-b border-gray-200 mb-4">
+  <h1 class="text-4xl font-bold tracking-tight text-gray-900">Update opinion</h1>
+</div>
+
+<div class="d-flex mb-4 " id="stars" >
+  <mat-label class="mr-3 mt-1">Rating:</mat-label>
+    <div *ngFor="let item of [].constructor(UpdateOpinionViewmodel.stars); let i = index">
+        <mat-icon class="icon-color d-flex cursor"  color="accent" (click)="starClick(i)">star</mat-icon>
+     </div>
+     <div *ngFor="let item of [].constructor(5 - UpdateOpinionViewmodel.stars); let i = index">
+        <mat-icon class="icon-color d-flex cursor" color="accent" (click)="starClickEmpty(i)">star_border</mat-icon>
+     </div>
+</div>
+
+<mat-form-field appearance="outline">
+    <input 
+    matInput 
+    [matDatepicker]="picker" 
+    [(ngModel)]="UpdateOpinionViewmodel.date" 
+    placeholder="Date"
+    [max]="this.maxDate"
+    [formControl]="this.date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="this.date.invalid">{{(getDateErrorMessage())}}</mat-error>
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+    <mat-label>Description</mat-label>
+    <textarea matInput
+              [(ngModel)]="UpdateOpinionViewmodel.description"
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="3"
+              cdkAutosizeMaxRows="10"
+              [formControl]="this.description"></textarea>
+    <mat-hint>Description of the visit</mat-hint>
+    <mat-icon matSuffix>description</mat-icon>
+    <mat-error *ngIf="this.description.invalid">{{(getDesErrorMessage())}}</mat-error>
+  </mat-form-field>
+
+<button
+  mat-flat-button
+  color="accent"
+  (click)="EditOpinion()"
+  [disabled]="formInvalid">    
+  Edit opinion
+</button>

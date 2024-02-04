@@ -1,0 +1,79 @@
+<h1>Register</h1>
+
+<mat-form-field appearance="outline">
+    <mat-label>User name</mat-label>
+    <input 
+        matInput
+        [(ngModel)]="this.registerModel.userName"
+        [formControl]="this.userName"
+        >
+    <mat-icon matSuffix>text_fields</mat-icon>
+    <mat-hint>Your user name</mat-hint>
+    <mat-error *ngIf="this.userName.invalid">{{(getNameErrorMessage())}}</mat-error>
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+    <mat-label>Email address</mat-label>
+    <input
+        matInput
+        [(ngModel)]="this.registerModel.email"
+        [formControl]="this.email"
+        placeholder="Ex. youremail@gmail.com">
+    <mat-icon matSuffix>email</mat-icon>
+    <mat-hint>Your valid and working email address</mat-hint>
+    <mat-error *ngIf="this.email.invalid">{{getEmailErrorMessage()}}</mat-error>
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+    <mat-label>Password</mat-label>
+    <input 
+        matInput
+        type="password"
+        [(ngModel)]="this.registerModel.password"
+        [formControl]="this.password">
+    <mat-icon matSuffix>lock</mat-icon>
+    <mat-hint>Requested password</mat-hint>
+    <mat-error *ngIf="this.password.invalid">{{(getPwErrorMessage())}}</mat-error>
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+    <mat-label>First name</mat-label>
+    <input matInput
+        [(ngModel)]="this.registerModel.firstName"
+        [formControl]="this.firstName">
+    <mat-icon matSuffix>text_fields</mat-icon>
+    <mat-hint>Your first name</mat-hint>
+    <mat-error *ngIf="this.firstName.invalid">{{(getFirstNameErrorMessage())}}</mat-error>
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+    <mat-label>Last name</mat-label>
+    <input matInput
+        [(ngModel)]="this.registerModel.lastName"
+        [formControl]="this.lastName">
+    <mat-icon matSuffix>text_fields</mat-icon>
+    <mat-hint>Your last name</mat-hint>
+    <mat-error *ngIf="this.lastName.invalid">{{(getLastNameErrorMessage())}}</mat-error>
+</mat-form-field>
+
+    
+<mat-form-field appearance="outline">
+    <mat-label>Image Url</mat-label>
+    <input matInput
+        [(ngModel)]="this.registerModel.imageUrl">
+    <mat-icon matSuffix>text_fields</mat-icon>
+    <mat-hint>Image Url of the toilet</mat-hint>
+</mat-form-field>
+
+<mat-checkbox [(ngModel)]="this.acceptTermsAndConditions">
+    Accept terms and conditions
+</mat-checkbox>
+
+<button
+    mat-flat-button
+    color="accent"
+    (click)="sendRegisterCredentials()"
+    [disabled]="!acceptTermsAndConditions || formInvalid"
+>    
+    Register
+</button>
