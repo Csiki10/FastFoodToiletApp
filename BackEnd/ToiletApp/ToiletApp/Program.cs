@@ -57,11 +57,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAngularOrigins",
     builder =>
     {
-        builder.WithOrigins(
-                            "https://toiletcodemaster.onrender.com"
-                            )
-                            .AllowAnyHeader()
-                            .AllowAnyMethod();
+        builder
+        .WithOrigins("http://localhost:4200")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
     });
 });
 
