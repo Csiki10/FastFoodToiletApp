@@ -8,6 +8,8 @@ using ToiletApp.Logic;
 using ToiletApp.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 // Add services to the container.
 

@@ -3,5 +3,5 @@ export class updateOpinion {
     public stars: number = 0
     public description: string = ""
     public date: Date = new Date()
-    public toiiletUid: string = ""
+    public toiletUid: string = ""
 }

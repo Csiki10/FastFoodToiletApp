@@ -62,7 +62,7 @@ export class UpdateOpinionComponent implements OnInit{
           this.UpdateOpinionViewmodel.date = success.date
           this.UpdateOpinionViewmodel.description = success.description
           this.UpdateOpinionViewmodel.stars = success.stars
-          this.UpdateOpinionViewmodel.toiiletUid = success.toiletUid
+          this.UpdateOpinionViewmodel.toiletUid = success.toiletUid
           this.toiletUid = success.toiletUid
         },
         (error) => {

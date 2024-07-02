@@ -7,5 +7,6 @@ export class Opinion {
     public date: Date = new Date()
     public dateString: string = ""
     public toilet: Toilet = new Toilet()
-    public toiiletUid: string = ""
+    public toiletUid: string = ""
+    public userUid: string = ""
 }
