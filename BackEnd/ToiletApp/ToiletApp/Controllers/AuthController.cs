@@ -10,177 +10,256 @@ using ToiletApp.Models;
 namespace ToiletApp.Controllers
 {
     [ApiController]
-    [Route("[controller]/[action]")]
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly UserManager<SiteUser> _userManager;
+        private readonly ILogger<AuthController> _logger;
 
-        public AuthController(UserManager<SiteUser> userManager)
+        public AuthController(UserManager<SiteUser> userManager, ILogger<AuthController> logger)
         {
             _userManager = userManager;
+            _logger = logger;
         }
 
-        [HttpPost]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
-            var user = await _userManager.FindByNameAsync(model.UserName);
-
-            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+            try
             {
-                var claim = new List<Claim>
-                {
-                    new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-                    new Claim(JwtRegisteredClaimNames.Name, user.UserName),
-                    new Claim(JwtRegisteredClaimNames.NameId, user.UserName)
-                };
+                var user = await _userManager.FindByNameAsync(model.UserName);
 
-                foreach (var role in await _userManager.GetRolesAsync(user))
+                if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
                 {
-                    claim.Add(new Claim(ClaimTypes.Role, role));
+                    var claim = new List<Claim>
+                    {
+                        new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                        new Claim(JwtRegisteredClaimNames.Name, user.UserName),
+                        new Claim(JwtRegisteredClaimNames.NameId, user.UserName)
+                    };
+
+                    foreach (var role in await _userManager.GetRolesAsync(user))
+                    {
+                        claim.Add(new Claim(ClaimTypes.Role, role));
+                    }
+
+                    var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("nagyonhosszutitkoskodhelyeamimostmeghosszabbmintazelobbvolt"));
+                    var token = new JwtSecurityToken(
+                        issuer: "http://www.security.org", audience: "http://www.security.org",
+                        claims: claim, expires: DateTime.Now.AddMinutes(60),
+                        signingCredentials: new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha256)
+                    );
+
+                    return Ok(new
+                    {
+                        uid = user.Id,
+                        token = new JwtSecurityTokenHandler().WriteToken(token),
+                        expiration = token.ValidTo.ToLocalTime()
+                    });
                 }
 
-                var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("nagyonhosszutitkoskodhelye"));
-                var token = new JwtSecurityToken(
-                    issuer: "http://www.security.org", audience: "http://www.security.org",
-                    claims: claim, expires: DateTime.Now.AddMinutes(60),
-                    signingCredentials: new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha256)
-                );
-
-                return Ok(new
-                {
-                    uid = user.Id,
-                    token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo.ToLocalTime()
-                });
+                return Unauthorized();
             }
-
-            return Unauthorized();
+            catch (Exception e)
+            {
+                _logger.LogError($"Error happened at {nameof(Login)}, Message: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
-        [HttpPut]
+        [HttpPut("InsertUser")]
         public async Task<IActionResult> InsertUser()
         {
-            var user = new SiteUser
+            try
             {
-                Email = Request.Form["email"],
-                UserName = Request.Form["userName"],
-                SecurityStamp = Guid.NewGuid().ToString(),
-                FirstName = Request.Form["firstName"],
-                LastName = Request.Form["lastName"],
-                ImageUrl = Request.Form["imageUrl"]
-            };
+                var user = new SiteUser
+                {
+                    Email = Request.Form["email"],
+                    UserName = Request.Form["userName"],
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    FirstName = Request.Form["firstName"],
+                    LastName = Request.Form["lastName"],
+                    ImageUrl = Request.Form["imageUrl"]
+                };
 
-            await _userManager.CreateAsync(user, Request.Form["password"]);
-            return Ok();
+                var result = await _userManager.CreateAsync(user, Request.Form["password"]);
+                if (result.Succeeded)
+                {
+                    return Ok();
+                }
+
+                return BadRequest(result.Errors);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error happened at {nameof(InsertUser)}, Message: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [Authorize]
-        [HttpGet]
+        [HttpGet("GetUserInfos")]
         public async Task<IActionResult> GetUserInfos()
         {
-            var u = this.User;
-            var user = _userManager.Users.FirstOrDefault(t => t.UserName == this.User.Identity.Name);
-            if (user != null)
+            try
             {
-                return Ok(new
+                var user = _userManager.Users.FirstOrDefault(t => t.UserName == this.User.Identity.Name);
+                if (user != null)
                 {
-                    UId = user.Id,
-                    UserName = user.UserName,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    PhotoData = user.Data,
-                    PhotoContentType = user.ContentType,
-                    Roles = await _userManager.GetRolesAsync(user),
-                    ImageUrl = user.ImageUrl
-                });
+                    return Ok(new
+                    {
+                        UId = user.Id,
+                        UserName = user.UserName,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Email = user.Email,
+                        PhotoData = user.Data,
+                        PhotoContentType = user.ContentType,
+                        Roles = await _userManager.GetRolesAsync(user),
+                        ImageUrl = user.ImageUrl
+                    });
+                }
+
+                return Unauthorized();
             }
-            return Unauthorized();
+            catch (Exception e)
+            {
+                _logger.LogError($"Error happened at {nameof(GetUserInfos)}, Message: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [Authorize]
-        [HttpDelete]
+        [HttpDelete("DeleteMyself")]
         public async Task<IActionResult> DeleteMyself()
         {
-            var user = _userManager.Users.FirstOrDefault(t => t.UserName == this.User.Identity.Name);
-            var result = await _userManager.DeleteAsync(user);
-            if (result.Succeeded)
+            try
             {
-                return Ok();
+                var user = _userManager.Users.FirstOrDefault(t => t.UserName == this.User.Identity.Name);
+                if (user != null)
+                {
+                    var result = await _userManager.DeleteAsync(user);
+                    if (result.Succeeded)
+                    {
+                        return Ok();
+                    }
+                    return BadRequest(result.Errors);
+                }
+
+                return NotFound();
             }
-            return BadRequest();
+            catch (Exception e)
+            {
+                _logger.LogError($"Error happened at {nameof(DeleteMyself)}, Message: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> Update(RegisterViewModel model)
+        [HttpPost("Update")]
+        public async Task<IActionResult> Update([FromBody] RegisterViewModel model)
         {
-            var user = _userManager.Users.FirstOrDefault(t => t.UserName == this.User.Identity.Name);
-            user.UserName = model.UserName;
-            user.FirstName = model.FirstName;
-            user.LastName = model.LastName;
-            await _userManager.UpdateAsync(user);
-            return Ok();
+            try
+            {
+                var user = _userManager.Users.FirstOrDefault(t => t.UserName == this.User.Identity.Name);
+                if (user != null)
+                {
+                    user.UserName = model.UserName;
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+
+                    var result = await _userManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                    {
+                        return Ok();
+                    }
+                    return BadRequest(result.Errors);
+                }
+
+                return NotFound();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error happened at {nameof(Update)}, Message: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
-        [HttpPost]
+        [HttpPost("Google")]
         public async Task<IActionResult> Google([FromBody] SocialToken token)
         {
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("https://oauth2.googleapis.com");
-            client.DefaultRequestHeaders.Accept.Add(
-              new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            var response = await client.GetAsync($"tokeninfo?id_token={token.Token}");
-            var result = await response.Content.ReadFromJsonAsync<GoogleModel>();
-
-            if (result != null)
+            try
             {
-                SiteUser user = new SiteUser
+                using HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("https://oauth2.googleapis.com");
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await client.GetAsync($"tokeninfo?id_token={token.Token}");
+                var result = await response.Content.ReadFromJsonAsync<GoogleModel>();
+
+                if (result != null)
                 {
-                    FirstName = result.given_name,
-                    LastName = result.family_name,
-                    Email = result.email,
-                    UserName = result.email,
-                };
-                return await SocialAuth(user);
+                    var user = new SiteUser
+                    {
+                        FirstName = result.given_name,
+                        LastName = result.family_name,
+                        Email = result.email,
+                        UserName = result.email,
+                    };
+                    return await SocialAuth(user);
+                }
+
+                return Unauthorized();
             }
-            return Unauthorized();
+            catch (Exception e)
+            {
+                _logger.LogError($"Error happened at {nameof(Google)}, Message: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         private async Task<IActionResult> SocialAuth(SiteUser user)
         {
-            if (_userManager.Users.FirstOrDefault(t => t.Email == user.Email) == null)
+            try
             {
-                var res = await _userManager.CreateAsync(user);
-            }
-
-            var appuser = _userManager.Users.FirstOrDefault(t => t.Email == user.Email);
-
-            if (appuser != null)
-            {
-                var claim = new List<Claim> {
-                    new Claim(JwtRegisteredClaimNames.Sub, appuser.UserName),
-                    new Claim(JwtRegisteredClaimNames.NameId, appuser.UserName),
-                    new Claim(JwtRegisteredClaimNames.Name, appuser.UserName)
-                };
-
-                foreach (var role in await _userManager.GetRolesAsync(appuser))
+                if (_userManager.Users.FirstOrDefault(t => t.Email == user.Email) == null)
                 {
-                    claim.Add(new Claim(ClaimTypes.Role, role));
+                    await _userManager.CreateAsync(user);
                 }
-                var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("nagyonhosszutitkoskodhelye"));
-                var token = new JwtSecurityToken(
-                    issuer: "http://www.security.org", audience: "http://www.security.org",
-                    claims: claim, expires: DateTime.Now.AddMinutes(60),
-                    signingCredentials: new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha256));
 
-                return Ok(new
+                var appUser = _userManager.Users.FirstOrDefault(t => t.Email == user.Email);
+
+                if (appUser != null)
                 {
-                    token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo.ToLocalTime()
-                });
+                    var claim = new List<Claim> {
+                        new Claim(JwtRegisteredClaimNames.NameId, appUser.UserName),
+                        new Claim(JwtRegisteredClaimNames.Name, appUser.UserName)
+                    };
+
+                    foreach (var role in await _userManager.GetRolesAsync(appUser))
+                    {
+                    claim.Add(new Claim(ClaimTypes.Role, role));
+                    }
+
+                    var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("nagyonhosszutitkoskodhelyeamimostmeghosszabbmintazelobbvolt"));
+                    var token = new JwtSecurityToken(
+                        issuer: "http://www.security.org", audience: "http://www.security.org",
+                    claims: claim, expires: DateTime.Now.AddMinutes(60),
+                        signingCredentials: new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha256));
+
+                    return Ok(new
+                    {
+                        token = new JwtSecurityTokenHandler().WriteToken(token),
+                        expiration = token.ValidTo.ToLocalTime()
+                    });
+                }
+
+                return Unauthorized();
             }
-            return Unauthorized();
+            catch (Exception e)
+            {
+                _logger.LogError($"Error happened at {nameof(SocialAuth)}, Message: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 
