@@ -91,7 +91,7 @@ export class UpdateUserComponent implements OnInit {
         .set('Content-Type', 'application/json'); 
 
     this.http
-    .get<any>('http://localhost:5200/Auth/GetUserInfos', {headers})
+    .get<any>('http://localhost:5200/api/Auth/GetUserInfos', {headers})
     .subscribe(
       (success) => {
         this.user.userName = success.userName
@@ -108,7 +108,7 @@ export class UpdateUserComponent implements OnInit {
   public async updateUser(): Promise<void>{
     const token = localStorage.getItem('token');
 
-    const response = await fetch("http://localhost:5200/Auth/Update", {
+    const response = await fetch("http://localhost:5200/api/Auth/Update", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

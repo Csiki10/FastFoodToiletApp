@@ -125,7 +125,7 @@ export class RegisterComponent {
     this.formData.append('password', this.registerModel.password);
     this.formData.append('imageUrl',this.registerModel.imageUrl );
 
-    this.http.put('http://localhost:5200/Auth/InsertUser', this.formData, {reportProgress: true, observe: 'events'})
+    this.http.put('http://localhost:5200/api/Auth/InsertUser', this.formData, {reportProgress: true, observe: 'events'})
     .subscribe(
       (success) => {
         this.snackBar

@@ -24,7 +24,7 @@ export class DeleteUserComponent {
         .set('Content-Type', 'application/json'); 
 
     this.http
-    .delete<any>('http://localhost:5200/Auth/DeleteMyself', {headers})
+    .delete<any>('http://localhost:5200/api/Auth/DeleteMyself', {headers})
     .subscribe(
       (success) => {
         this.snackBar.open('Success! It was nice to meet you!', 'Close', { duration: 5000 })

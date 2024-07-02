@@ -29,7 +29,7 @@ export class NavigationComponent implements OnInit {
         .set('Content-Type', 'application/json'); 
 
     this.http
-    .get<any>('http://localhost:5200/Auth/GetUserInfos', {headers})
+    .get<any>('http://localhost:5200/api/Auth/GetUserInfos', {headers})
     .subscribe(
       (success) => {
         this.user.userName = success.userName

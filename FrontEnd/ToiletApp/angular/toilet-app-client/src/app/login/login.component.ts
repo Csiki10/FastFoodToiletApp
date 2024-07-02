@@ -34,7 +34,7 @@ export class LoginComponent {
 
   public sendLoginCredentials() : void {
     this.http
-    .post<TokenModel>('http://localhost:5200/Auth/Login', this.loginModel)
+    .post<TokenModel>('http://localhost:5200/api/Auth/Login', this.loginModel)
     .subscribe(
       (success) => {
         
