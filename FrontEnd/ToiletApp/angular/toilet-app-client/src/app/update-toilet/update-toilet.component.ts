@@ -69,7 +69,7 @@ export class UpdateToiletComponent  implements OnInit  {
     this.route.params.subscribe(param => {
       let tId = param['id']
       this.http
-      .get<any>('http://localhost:5200/Toilet/GetToilet/'+tId, { headers })
+      .get<any>('http://localhost:5200/api/Toilet/GetToilet/'+tId, { headers })
       .subscribe(
         (success) => {
           this.UpdateToiletViewModel.id = success.uid
@@ -166,7 +166,7 @@ export class UpdateToiletComponent  implements OnInit  {
     });
 
     this.http
-      .put('http://localhost:5200/Toilet/EditToilet', this.UpdateToiletViewModel, { headers })
+      .put('http://localhost:5200/api/Toilet/EditToilet', this.UpdateToiletViewModel, { headers })
       .subscribe(
         (success) => {
           this.snackBar.open('Edit was successful!', 'Close', { duration: 5000 })

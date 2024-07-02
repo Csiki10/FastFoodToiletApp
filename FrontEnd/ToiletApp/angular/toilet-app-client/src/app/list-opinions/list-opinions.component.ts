@@ -39,7 +39,7 @@ export class ListOpinionsComponent implements OnInit {
       let tId = param['id'];
 
       this.http
-      .get<Array<Opinion>>('http://localhost:5200/Opinion/GetOpinions/'+tId, { headers })
+      .get<Array<Opinion>>('http://localhost:5200/api/Opinion/GetOpinions/'+tId, { headers })
       .subscribe(resp => {
         resp.map(x => {
           let opinion = new Opinion()
@@ -72,7 +72,7 @@ export class ListOpinionsComponent implements OnInit {
         .set('Authorization', 'Bearer ' + token)
         .set('Content-Type', 'application/json'); 
 
-    const url1 = 'http://localhost:5200/Opinion/DeleteOpinion?tuid='+toiletId+"&ouid="+opinionId
+    const url1 = 'http://localhost:5200/api/Opinion/DeleteOpinion?tuid='+toiletId+"&ouid="+opinionId
     this.http
       .delete(url1, {headers})
       .subscribe(

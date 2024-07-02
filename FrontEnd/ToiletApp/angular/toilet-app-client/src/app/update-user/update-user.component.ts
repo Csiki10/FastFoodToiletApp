@@ -90,10 +90,13 @@ export class UpdateUserComponent implements OnInit {
         .set('Authorization', 'Bearer ' + token)
         .set('Content-Type', 'application/json'); 
 
+    console.log("headeer:"+headers)
+
     this.http
     .get<any>('http://localhost:5200/api/Auth/GetUserInfos', {headers})
     .subscribe(
       (success) => {
+        console.log(success)
         this.user.userName = success.userName
         this.user.email = success.email
         this.user.firstName = success.firstName

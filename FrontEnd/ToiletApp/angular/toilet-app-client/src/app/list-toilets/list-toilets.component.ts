@@ -63,7 +63,7 @@ export class ListToiletsComponent implements OnInit{
         .set('Authorization', 'Bearer ' + token)
         .set('Content-Type', 'application/json'); 
 
-    const url1 = 'http://localhost:5200/Toilet/DeleteToilet/'+id
+    const url1 = 'http://localhost:5200/api/Toilet/DeleteToilet/'+id
     this.http
       .delete(url1, {headers})
       .subscribe(
@@ -276,7 +276,7 @@ export class ListToiletsComponent implements OnInit{
 
   getToilets(): void{
     this.http
-    .get<Array<any>>('http://localhost:5200/Toilet/GetToilets')
+    .get<Array<any>>('http://localhost:5200/api/api/Toilet/GetToilets')
     .subscribe(resp => {
       resp.map(x => {
         let address = new Address();

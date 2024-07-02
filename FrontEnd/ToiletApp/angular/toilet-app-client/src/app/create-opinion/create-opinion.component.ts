@@ -95,7 +95,7 @@ export class CreateOpinionComponent  implements OnInit{
     });
 
     this.http
-      .post('http://localhost:5200/Opinion/AddOpinion',this.opinion, { headers })
+      .post('http://localhost:5200/api/Opinion/AddOpinion',this.opinion, { headers })
       .subscribe(
         (success) => {
           this.snackBar.open('Add opinion was successful!', 'Close', { duration: 5000 })

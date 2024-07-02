@@ -138,7 +138,7 @@ export class CreateToiletComponent {
     })
 
     this.http
-      .post('http://localhost:5200/Toilet/AddToilet',this.toilet, { headers }
+      .post('http://localhost:5200/api/Toilet/AddToilet',this.toilet, { headers }
       )
       .subscribe(
         (success) => {

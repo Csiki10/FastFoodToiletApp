@@ -55,7 +55,7 @@ export class UpdateOpinionComponent implements OnInit{
     this.route.params.subscribe(param => {
       let oId = param['id']
       this.http
-      .get<any>('http://localhost:5200/Opinion/GetEditOpinion/'+oId, { headers })
+      .get<any>('http://localhost:5200/api/Opinion/GetEditOpinion/'+oId, { headers })
       .subscribe(
         (success) => {
           this.UpdateOpinionViewmodel.id = success.uid
@@ -107,7 +107,7 @@ export class UpdateOpinionComponent implements OnInit{
     });
 
     this.http
-      .put('http://localhost:5200/Opinion/EditOpinion', this.UpdateOpinionViewmodel, { headers })
+      .put('http://localhost:5200/api/Opinion/EditOpinion', this.UpdateOpinionViewmodel, { headers })
       .subscribe(
         (success) => {
           this.snackBar.open('Edit was successful!', 'Close', { duration: 5000 })
