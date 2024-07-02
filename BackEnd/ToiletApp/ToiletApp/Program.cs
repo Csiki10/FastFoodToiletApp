@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using ToiletApp.Data;
-using ToiletApp.Logic;
+using ToiletApp.Services;
 using ToiletApp.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +19,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
     .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=ToiletApp;Trusted_Connection=True;MultipleActiveResultSets=true")
     .UseLazyLoadingProxies();
 });
-builder.Services.AddTransient<IToiletAppLogic, ToiletAppLogic>();
+builder.Services.AddTransient<IToiletAppService, ToiletAppService>();
 builder.Services.AddIdentity<SiteUser, IdentityRole>(option =>
 {
     option.Password.RequiredLength = 6;

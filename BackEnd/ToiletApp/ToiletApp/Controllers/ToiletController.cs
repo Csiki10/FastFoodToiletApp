@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using ToiletApp.Logic;
+using ToiletApp.Services;
 using ToiletApp.Models;
 
 namespace ToiletApp.Controllers
@@ -10,13 +10,13 @@ namespace ToiletApp.Controllers
     [Route("[controller]/[action]")]
     public class ToiletController : ControllerBase
     {
-        private readonly IToiletAppLogic _logic;
+        private readonly IToiletAppService _toiletService;
         private readonly UserManager<SiteUser> _userManager;
         private readonly ILogger _logger;
 
-        public ToiletController(UserManager<SiteUser> userManager, IToiletAppLogic logic, ILogger<ToiletController> logger)
+        public ToiletController(UserManager<SiteUser> userManager, IToiletAppService logic, ILogger<ToiletController> logger)
         {
-            this._logic = logic;
+            this._toiletService = logic;
             this._userManager = userManager;
             this._logger = logger;
         }
@@ -26,7 +26,7 @@ namespace ToiletApp.Controllers
         {
             try
             {
-                return _logic.GetAllToilets();
+                return _toiletService.GetAllToilets();
             }
             catch (Exception e)
             {
@@ -47,7 +47,7 @@ namespace ToiletApp.Controllers
 
             try
             {
-                return _logic.GetToilet(id);
+                return _toiletService.GetToilet(id);
             }
             catch (Exception e)
             {
@@ -68,7 +68,7 @@ namespace ToiletApp.Controllers
             try
             {
                 var user = _userManager.Users.FirstOrDefault(t => t.UserName == this.User.Identity.Name);
-                _logic.AddNewToilet(t, user);
+                _toiletService.AddNewToilet(t, user);
             }
             catch (Exception e)
             {
@@ -86,7 +86,7 @@ namespace ToiletApp.Controllers
             }
             try
             {
-                _logic.UpdateToilet(t);
+                _toiletService.UpdateToilet(t);
             }
             catch (Exception e )
             {
@@ -105,7 +105,7 @@ namespace ToiletApp.Controllers
 
             try
             {
-                _logic.DeleteToilet(id);
+                _toiletService.DeleteToilet(id);
             }
             catch (Exception e )
             {

@@ -1,8 +1,8 @@
 ﻿using ToiletApp.Models;
 
-namespace ToiletApp.Logic
+namespace ToiletApp.Services
 {
-    public interface IToiletAppLogic
+    public interface IToiletAppService
     {
         void AddNewToilet(Toilet t, SiteUser user);
         void AddOpinion(Opinion opinion);

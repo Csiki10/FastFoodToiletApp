@@ -2,14 +2,14 @@
 using ToiletApp.Data;
 using ToiletApp.Models;
 
-namespace ToiletApp.Logic
+namespace ToiletApp.Services
 {
-    public class ToiletAppLogic : IToiletAppLogic
+    public class ToiletAppService : IToiletAppService
     {
         ApplicationDbContext db;
         
 
-        public ToiletAppLogic(ApplicationDbContext db)
+        public ToiletAppService(ApplicationDbContext db)
         {
             this.db = db;
         }
